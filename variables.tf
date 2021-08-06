@@ -1,5 +1,5 @@
 variable "name" {
-  description = "Tenant name."
+  description = "Forwarding scale policy name."
   type        = string
 
   validation {
@@ -8,24 +8,13 @@ variable "name" {
   }
 }
 
-variable "alias" {
-  description = "Tenant alias."
+variable "profile" {
+  description = "Profile. Choices: `dual-stack`, `ipv4`, `high-dual-stack`, `high-lpm`."
   type        = string
-  default     = ""
+  default     = "dual-stack"
 
   validation {
-    condition     = can(regex("^[a-zA-Z0-9_.-]{0,64}$", var.alias))
-    error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
-  }
-}
-
-variable "description" {
-  description = "Tenant description."
-  type        = string
-  default     = ""
-
-  validation {
-    condition     = can(regex("^[a-zA-Z0-9\\!#$%()*,-./:;@ _{|}~?&+]{0,128}$", var.description))
-    error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `\\`, `!`, `#`, `$`, `%`, `(`, `)`, `*`, `,`, `-`, `.`, `/`, `:`, `;`, `@`, ` `, `_`, `{`, `|`, }`, `~`, `?`, `&`, `+`. Maximum characters: 128."
+    condition     = contains(["dual-stack", "ipv4", "high-dual-stack", "high-lpm"], var.profile)
+    error_message = "Valid values are `dual-stack`, `ipv4`, `high-dual-stack` or `high-lpm`."
   }
 }
