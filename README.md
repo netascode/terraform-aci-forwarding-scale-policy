@@ -12,7 +12,8 @@ Location in GUI:
 
 ```hcl
 module "aci_forwarding_scale_policy" {
-  source = "netascode/forwarding-scale-policy/aci"
+  source  = "netascode/forwarding-scale-policy/aci"
+  version = ">= 0.0.1"
 
   name    = "HIGH-DUAL-STACK"
   profile = "high-dual-stack"
