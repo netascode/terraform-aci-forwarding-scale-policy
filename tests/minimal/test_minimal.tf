@@ -5,8 +5,8 @@ terraform {
     }
 
     aci = {
-      source  = "netascode/aci"
-      version = ">=0.2.0"
+      source  = "CiscoDevNet/aci"
+      version = ">=2.0.0"
     }
   }
 }
@@ -17,7 +17,7 @@ module "main" {
   name = "DUAL-STACK"
 }
 
-data "aci_rest" "topoctrlFwdScaleProfilePol" {
+data "aci_rest_managed" "topoctrlFwdScaleProfilePol" {
   dn = "uni/infra/fwdscalepol-${module.main.name}"
 
   depends_on = [module.main]
@@ -28,13 +28,13 @@ resource "test_assertions" "topoctrlFwdScaleProfilePol" {
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.topoctrlFwdScaleProfilePol.content.name
+    got         = data.aci_rest_managed.topoctrlFwdScaleProfilePol.content.name
     want        = module.main.name
   }
 
   equal "profType" {
     description = "profType"
-    got         = data.aci_rest.topoctrlFwdScaleProfilePol.content.profType
+    got         = data.aci_rest_managed.topoctrlFwdScaleProfilePol.content.profType
     want        = "dual-stack"
   }
 }
